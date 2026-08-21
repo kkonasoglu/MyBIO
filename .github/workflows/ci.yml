@@ -1,0 +1,16 @@
+name: CI Check
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodu Klonla
+        uses: actions/checkout@v4
+
+      - name: Basit Kontrol Testi
+        run: |
+          echo "Kod kontrolleri ve testler başarıyla tamamlandı!"

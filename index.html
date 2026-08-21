@@ -316,14 +316,66 @@
             </div>
         </div>
 
-        <div class="bars">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
+        <!-- Footer / Ziyaretçi Sayacı -->
+        <footer class="footer">
+            <div class="visitor-counter">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                <span class="lang-tr">Toplam Ziyaretçi: <strong id="visitor-count">...</strong></span>
+                <span class="lang-en">Total Visitors: <strong id="visitor-count-en">...</strong></span>
+            </div>
+            <p>&copy; 2026 turxInteractive. Tüm Hakları Saklıdır.</p>
+        </footer>
+
+
+
+    </div>
+
+    <!-- Login Popup Overlay -->
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup-card">
+            <h2 class="lang-tr">Hoş Geldiniz</h2>
+            <h2 class="lang-en">Welcome</h2>
+            <p class="lang-tr">Lütfen aşağıdaki kısa bilgileri doldurun.</p>
+            <p class="lang-en">Please fill in the short form below.</p>
+            
+            <form class="popup-form" id="popup-form" onsubmit="handlePopupSubmit(event)">
+                <div class="popup-input-group">
+                    <label class="lang-tr" for="pop-name">Adınız Soyadınız</label>
+                    <label class="lang-en" for="pop-name">First & Last Name</label>
+                    <input type="text" id="pop-name" class="popup-input" required placeholder="Örn: Ahmet Yılmaz">
+                </div>
+                
+                <div class="popup-input-group">
+                    <label class="lang-tr" for="pop-source">Bizi Nereden Duydunuz?</label>
+                    <label class="lang-en" for="pop-source">How Did You Find Us?</label>
+                    <select id="pop-source" class="popup-input" required onchange="handleSourceChange(this)">
+                        <option value="" disabled selected class="lang-tr">Seçiniz...</option>
+                        <option value="" disabled selected class="lang-en">Choose...</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="YouTube">YouTube</option>
+                        <option value="GitHub">GitHub</option>
+                        <option value="LinkedIn">LinkedIn</option>
+                        <option value="Other">Diğer / Other</option>
+                    </select>
+                </div>
+
+                <div class="popup-input-group" id="pop-source-other-wrapper" style="display: none;">
+                    <label class="lang-tr" for="pop-source-other">Nereden? (Lütfen belirtin)</label>
+                    <label class="lang-en" for="pop-source-other">Where? (Please specify)</label>
+                    <input type="text" id="pop-source-other" class="popup-input" placeholder="...">
+                </div>
+                
+                <button type="submit" class="popup-submit-btn">
+                    <span class="lang-tr">Giriş Yap</span>
+                    <span class="lang-en">Enter Page</span>
+                </button>
+            </form>
+            
+            <a class="popup-skip-link" onclick="skipPopup()">
+                <span class="lang-tr">Girmek istemiyorum</span>
+                <span class="lang-en">I don't want to enter</span>
+            </a>
         </div>
-
-
-
     </div>
     
     <script>
@@ -384,10 +436,122 @@
             }, 4500); // Autoplay screenshots every 4.5 seconds
         }
 
+        // Popup Handlers
+        function closePopup() {
+            const overlay = document.getElementById('popup-overlay');
+            if (overlay) {
+                overlay.classList.add('hide');
+            }
+        }
+
+        function handlePopupSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('pop-name').value;
+            let source = document.getElementById('pop-source').value;
+            
+            if (source === 'Other') {
+                const otherVal = document.getElementById('pop-source-other').value.trim();
+                if (otherVal) {
+                    source = `Other (${otherVal})`;
+                }
+            }
+            
+            // Save locally
+            localStorage.setItem('user-info', JSON.stringify({ name, source }));
+            localStorage.setItem('popup-dismissed-v3', 'true');
+            
+            closePopup();
+            incrementVisitorCount();
+
+            // Submit registration to local server
+            fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, source })
+            })
+            .then(res => res.json())
+            .then(data => console.log('Registration logged:', data))
+            .catch(err => console.error('Registration failed:', err));
+        }
+
+        function handleSourceChange(select) {
+            const otherWrapper = document.getElementById('pop-source-other-wrapper');
+            const otherInput = document.getElementById('pop-source-other');
+            if (select.value === 'Other') {
+                otherWrapper.style.display = 'flex';
+                otherInput.required = true;
+                otherInput.focus();
+            } else {
+                otherWrapper.style.display = 'none';
+                otherInput.required = false;
+                otherInput.value = '';
+            }
+        }
+
+        function skipPopup() {
+            // Do not save 'popup-dismissed' so they see it again next time
+            closePopup();
+            incrementVisitorCount();
+        }
+
+        // Visitor Counter API Logic (Local Server)
+        const API_URL = '/api/visits';
+
+        function fetchVisitorCount() {
+            fetch(API_URL)
+                .then(res => res.json())
+                .then(data => {
+                    const count = data.value || 0;
+                    updateCountDisplay(count);
+                })
+                .catch(err => {
+                    console.error('Counter API Error:', err);
+                    updateCountDisplay('0');
+                });
+        }
+
+        function incrementVisitorCount() {
+            const countHitRegistered = localStorage.getItem('count-hit-registered-v3');
+            if (countHitRegistered === 'true') {
+                fetchVisitorCount();
+                return;
+            }
+
+            fetch(API_URL + '/up', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    const count = data.value || 0;
+                    updateCountDisplay(count);
+                    localStorage.setItem('count-hit-registered-v3', 'true');
+                })
+                .catch(err => {
+                    console.error('Counter API up Error:', err);
+                    updateCountDisplay('0');
+                });
+        }
+
+        function updateCountDisplay(count) {
+            const trEl = document.getElementById('visitor-count');
+            const enEl = document.getElementById('visitor-count-en');
+            if (trEl) trEl.textContent = count;
+            if (enEl) enEl.textContent = count;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const savedLang = localStorage.getItem('preferred-lang') || 'tr';
             switchLanguage(savedLang);
             startInnerSlidersAutoplay();
+
+            // Check if popup was already dismissed
+            const popupDismissed = localStorage.getItem('popup-dismissed-v3');
+            if (popupDismissed === 'true') {
+                closePopup();
+                fetchVisitorCount();
+            } else {
+                // Keep popup open, visitor count will increment when form is submitted or skipped
+            }
 
             // Scroll Reveal Observer
             const revealElements = document.querySelectorAll('.reveal');

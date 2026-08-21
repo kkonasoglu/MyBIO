@@ -340,13 +340,8 @@
             </div>
         </div>
 
-        <!-- Footer / Ziyaretçi Sayacı -->
+        <!-- Footer -->
         <footer class="footer">
-            <div class="visitor-counter">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                <span class="lang-tr">Toplam Ziyaretçi: <strong id="visitor-count">...</strong></span>
-                <span class="lang-en">Total Visitors: <strong id="visitor-count-en">...</strong></span>
-            </div>
             <p>&copy; 2026 turxInteractive. Tüm Hakları Saklıdır.</p>
         </footer>
 
@@ -537,7 +532,6 @@
             
             updateLoginHeaderState();
             closePopup();
-            incrementVisitorCount();
 
             // Submit registration to local server
             fetch('/api/register', {
@@ -569,50 +563,6 @@
         function skipPopup() {
             // Do not save 'popup-dismissed' so they see it again next time
             closePopup();
-            incrementVisitorCount();
-        }
-
-        // Visitor Counter API Logic (Local Server)
-        const API_URL = '/api/visits';
-
-        function fetchVisitorCount() {
-            fetch(API_URL)
-                .then(res => res.json())
-                .then(data => {
-                    const count = data.value || 0;
-                    updateCountDisplay(count);
-                })
-                .catch(err => {
-                    console.error('Counter API Error:', err);
-                    updateCountDisplay('0');
-                });
-        }
-
-        function incrementVisitorCount() {
-            const countHitRegistered = localStorage.getItem('count-hit-registered-v3');
-            if (countHitRegistered === 'true') {
-                fetchVisitorCount();
-                return;
-            }
-
-            fetch(API_URL + '/up', { method: 'POST' })
-                .then(res => res.json())
-                .then(data => {
-                    const count = data.value || 0;
-                    updateCountDisplay(count);
-                    localStorage.setItem('count-hit-registered-v3', 'true');
-                })
-                .catch(err => {
-                    console.error('Counter API up Error:', err);
-                    updateCountDisplay('0');
-                });
-        }
-
-        function updateCountDisplay(count) {
-            const trEl = document.getElementById('visitor-count');
-            const enEl = document.getElementById('visitor-count-en');
-            if (trEl) trEl.textContent = count;
-            if (enEl) enEl.textContent = count;
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -625,9 +575,8 @@
             updateLoginHeaderState();
             if (popupDismissed === 'true') {
                 closePopup();
-                fetchVisitorCount();
             } else {
-                // Keep popup open, visitor count will increment when form is submitted or skipped
+                // Keep popup open
             }
 
             // Scroll Reveal Observer

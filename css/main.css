@@ -226,6 +226,7 @@ h1 {
     top: 20px;
     right: 20px;
     display: flex;
+    align-items: center;
     gap: 4px;
     z-index: 1000;
     background: rgba(15, 23, 42, 0.8);
@@ -257,6 +258,41 @@ h1 {
     background: #1375ff;
     color: #ffffff;
     box-shadow: 0 2px 8px rgba(19, 117, 255, 0.3);
+}
+
+/* Msg Button & Divider styling */
+.lang-switcher .msg-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(90deg, #1375ff 0%, #38bdf8 100%);
+    color: #ffffff;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 10px rgba(19, 117, 255, 0.2);
+}
+
+.lang-switcher .msg-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(19, 117, 255, 0.35);
+    color: #ffffff;
+}
+
+.lang-switcher .msg-btn svg {
+    color: #ffffff;
+}
+
+.switcher-divider {
+    width: 1px;
+    height: 18px;
+    background: rgba(255, 255, 255, 0.15);
+    margin: 0 4px;
 }
 
 /* Language Visibility Rules */
@@ -786,6 +822,14 @@ body.lang-en .lang-en {
     .lang-switcher button {
         padding: 5px 12px;
         font-size: 0.8rem;
+    }
+
+    .lang-switcher .msg-btn {
+        padding: 6px 10px;
+    }
+
+    .lang-switcher .msg-btn span {
+        display: none !important;
     }
 
     /* Hero section */

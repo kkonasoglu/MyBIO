@@ -446,14 +446,30 @@
 
         function handlePopupSubmit(event) {
             event.preventDefault();
-            const name = document.getElementById('pop-name').value;
-            let source = document.getElementById('pop-source').value;
+            const nameInput = document.getElementById('pop-name');
+            const sourceSelect = document.getElementById('pop-source');
+            
+            const name = nameInput.value.trim();
+            let source = sourceSelect.value;
+            
+            // Validation: Do not allow empty name or unselected source
+            if (!name) {
+                nameInput.focus();
+                return;
+            }
+            if (!source) {
+                sourceSelect.focus();
+                return;
+            }
             
             if (source === 'Other') {
-                const otherVal = document.getElementById('pop-source-other').value.trim();
-                if (otherVal) {
-                    source = `Other (${otherVal})`;
+                const otherInput = document.getElementById('pop-source-other');
+                const otherVal = otherInput.value.trim();
+                if (!otherVal) {
+                    otherInput.focus();
+                    return;
                 }
+                source = `Other (${otherVal})`;
             }
             
             // Save locally

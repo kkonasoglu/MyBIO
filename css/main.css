@@ -878,11 +878,6 @@ body.lang-en .lang-en {
     .lang-switcher .msg-btn span,
     .lang-switcher .login-btn span,
     .lang-switcher .login-badge span {
-    .lang-switcher .msg-btn {
-        padding: 6px 10px;
-    }
-
-    .lang-switcher .msg-btn span {
         display: none !important;
     }
 

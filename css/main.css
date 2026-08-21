@@ -66,9 +66,35 @@ h1 {
     overflow: hidden;
     position: relative;
     background-color: #000000;
+    /* Neon glow behind the logo + subtle developer grid pattern */
+    background-image: 
+        radial-gradient(circle at center, rgba(19, 117, 255, 0.22) 0%, rgba(0, 0, 0, 0) 70%),
+        linear-gradient(rgba(56, 189, 248, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 45px 45px, 45px 45px;
+    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+}
+
+/* Subtle CRT Scanline overlay for a retro game developer console vibe */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.2) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0.7;
 }
 
 .hero img {
@@ -77,6 +103,7 @@ h1 {
     object-fit: contain;
     opacity: 0;
     animation: slideUp 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    z-index: 2;
 }
 
 @keyframes slideUp {
@@ -855,5 +882,179 @@ body.lang-en .lang-en {
 .reveal.active {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* --- Footer & Visitor Counter CSS --- */
+.footer {
+    width: 100%;
+    padding: 40px 20px;
+    background-color: #05070c;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    text-align: center;
+    color: #475569;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.visitor-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(30, 41, 59, 0.4);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.visitor-counter svg {
+    color: #38bdf8;
+}
+
+.visitor-counter strong {
+    color: #38bdf8;
+}
+
+/* --- Login Popup CSS --- */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(5, 7, 12, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-overlay.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.popup-card {
+    background: #131b2e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 40px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    animation: popupScaleUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popupScaleUp {
+    from {
+        transform: scale(0.9) translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.popup-card h2 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+.popup-card p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+}
+
+.popup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.popup-input-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 6px;
+}
+
+.popup-input-group label {
+    color: #cbd5e1;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.popup-input {
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 14px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.popup-input:focus {
+    outline: none;
+    border-color: #1375ff;
+    box-shadow: 0 0 0 3px rgba(19, 117, 255, 0.15);
+}
+
+select.popup-input {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.popup-submit-btn {
+    background: linear-gradient(90deg, #1375ff 0%, #38bdf8 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(19, 117, 255, 0.25);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 8px;
+}
+
+.popup-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(19, 117, 255, 0.4);
+}
+
+.popup-skip-link {
+    display: inline-block;
+    color: #64748b;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    margin-top: 20px;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.popup-skip-link:hover {
+    color: #94a3b8;
 }
 

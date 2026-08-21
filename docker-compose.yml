@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    container_name: kkonasoglu-bio
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: always

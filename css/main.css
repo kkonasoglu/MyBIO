@@ -410,3 +410,279 @@ body.lang-en .lang-en {
     }
 }
 
+/* --- Project Section --- */
+.project-section {
+    width: 100%;
+    padding: 80px 20px;
+    background-color: #090d16;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.project-section-header {
+    max-width: 1100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.project-title-wrapper {
+    margin-bottom: 0;
+}
+
+.project-title-wrapper h2 {
+    color: #ffffff;
+    font-size: 2.3rem;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.project-title-wrapper h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: #38bdf8;
+    border-radius: 2px;
+}
+
+/* Project Carousel Nav Buttons */
+.project-carousel-nav {
+    display: flex;
+    gap: 12px;
+}
+
+.project-nav-btn {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    font-size: 1.1rem;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.project-nav-btn:hover {
+    background: #1375ff;
+    border-color: #1375ff;
+    box-shadow: 0 0 12px rgba(19, 117, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.project-nav-btn:active {
+    transform: translateY(0);
+}
+
+/* Outer Carousel Slider Track */
+.project-carousel-wrapper {
+    max-width: 1100px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.project-carousel-track {
+    display: flex;
+    width: 300%; /* For 3 projects */
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-slide {
+    width: 33.3333%;
+    flex-shrink: 0;
+}
+
+.project-container {
+    width: 100%;
+    display: flex;
+    gap: 40px;
+    align-items: stretch;
+}
+
+/* Left: Screenshots Slider inside Project Slide */
+.project-left {
+    flex: 1.2;
+    display: flex;
+    align-items: center;
+}
+
+.slider-wrapper {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.slides-container {
+    width: 100%;
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background: #131b2e;
+}
+
+.project-slides-track {
+    display: flex;
+    height: 100%;
+    width: 200%; /* 2 images per project slide */
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide {
+    width: 50%;
+    height: 100%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.screenshot-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    color: #64748b;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.screenshot-placeholder svg {
+    color: #38bdf8;
+    opacity: 0.6;
+    animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Right: Description Text & Button */
+.project-right {
+    flex: 1.8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.project-right h3 {
+    color: #ffffff;
+    font-size: 1.85rem;
+    margin-bottom: 5px;
+    border-left: 4px solid #38bdf8;
+    padding-left: 12px;
+}
+
+.project-right p {
+    color: #94a3b8;
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+.project-right strong {
+    color: #ffffff;
+}
+
+/* Download Button inside Right Content */
+.project-download-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 48px;
+    background: linear-gradient(90deg, #1375ff 0%, #38bdf8 100%);
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 30px;
+    box-shadow: 0 4px 20px rgba(19, 117, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.download-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(19, 117, 255, 0.5);
+}
+
+.download-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Project Carousel Dots */
+.project-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.p-dot {
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.p-dot.active {
+    background: #38bdf8;
+    width: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+}
+
+/* Responsive adjustments for Carousel */
+@media (max-width: 768px) {
+    .project-carousel-wrapper {
+        overflow: visible; /* Allows swipe-like flow if needed, or keep hidden */
+    }
+    
+    .project-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .project-left, .project-right {
+        width: 100%;
+        flex: none;
+    }
+    
+    .project-download-wrapper {
+        justify-content: center;
+    }
+}
+

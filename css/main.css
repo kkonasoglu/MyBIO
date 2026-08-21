@@ -304,12 +304,14 @@ h1 {
     color: #22c55e;
 }
 
+/* Msg Button & Divider styling */
 .lang-switcher .msg-btn {
     display: flex;
     align-items: center;
     gap: 8px;
     background: linear-gradient(90deg, #1375ff 0%, #38bdf8 100%);
     color: #ffffff !important;
+    color: #ffffff;
     border: none;
     padding: 6px 16px;
     border-radius: 20px;
@@ -324,6 +326,7 @@ h1 {
 .lang-switcher .msg-btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 6px 15px rgba(19, 117, 255, 0.35);
+    color: #ffffff;
 }
 
 .lang-switcher .msg-btn svg {
@@ -875,6 +878,11 @@ body.lang-en .lang-en {
     .lang-switcher .msg-btn span,
     .lang-switcher .login-btn span,
     .lang-switcher .login-badge span {
+    .lang-switcher .msg-btn {
+        padding: 6px 10px;
+    }
+
+    .lang-switcher .msg-btn span {
         display: none !important;
     }
 

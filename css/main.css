@@ -165,10 +165,10 @@ h1 {
     transform: scale(1.1);
 }
 
-.social-box.facebook:hover {
-    background-color: #1877f2;
+.social-box.linkedin:hover {
+    background-color: #0a66c2;
     color: #ffffff;
-    border-color: #1877f2;
+    border-color: #0a66c2;
 }
 
 .social-box.twitter:hover {

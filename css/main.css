@@ -260,12 +260,57 @@ h1 {
     box-shadow: 0 2px 8px rgba(19, 117, 255, 0.3);
 }
 
+/* Header Buttons, Badges, and Dividers styling */
+.lang-switcher .login-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lang-switcher .login-btn:hover {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: #38bdf8;
+    color: #38bdf8;
+}
+
+.lang-switcher .login-btn svg {
+    color: #38bdf8;
+}
+
+.lang-switcher .login-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+.lang-switcher .login-badge svg {
+    color: #22c55e;
+}
+
 /* Msg Button & Divider styling */
 .lang-switcher .msg-btn {
     display: flex;
     align-items: center;
     gap: 8px;
     background: linear-gradient(90deg, #1375ff 0%, #38bdf8 100%);
+    color: #ffffff !important;
     color: #ffffff;
     border: none;
     padding: 6px 16px;
@@ -824,6 +869,15 @@ body.lang-en .lang-en {
         font-size: 0.8rem;
     }
 
+    .lang-switcher .msg-btn,
+    .lang-switcher .login-btn,
+    .lang-switcher .login-badge {
+        padding: 6px 10px;
+    }
+
+    .lang-switcher .msg-btn span,
+    .lang-switcher .login-btn span,
+    .lang-switcher .login-badge span {
     .lang-switcher .msg-btn {
         padding: 6px 10px;
     }

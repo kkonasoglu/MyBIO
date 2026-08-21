@@ -452,6 +452,39 @@
             }
         }
 
+        function openLoginPopup() {
+            const isRegistered = localStorage.getItem('popup-dismissed-v3') === 'true';
+            if (isRegistered) return; // Prevent opening if already registered
+
+            const overlay = document.getElementById('popup-overlay');
+            if (overlay) {
+                overlay.classList.remove('hide');
+            }
+        }
+
+        function updateLoginHeaderState() {
+            const isRegistered = localStorage.getItem('popup-dismissed-v3') === 'true';
+            const loginBtn = document.getElementById('btn-login');
+            const loginBadge = document.getElementById('badge-login');
+            const loginDivider = document.querySelector('.login-divider');
+            
+            if (isRegistered) {
+                if (loginBtn) loginBtn.style.display = 'none';
+                if (loginBadge) {
+                    loginBadge.classList.remove('hide');
+                    loginBadge.style.display = 'flex';
+                }
+                if (loginDivider) loginDivider.style.display = 'none';
+            } else {
+                if (loginBtn) {
+                    loginBtn.classList.remove('hide');
+                    loginBtn.style.display = 'flex';
+                }
+                if (loginBadge) loginBadge.style.display = 'none';
+                if (loginDivider) loginDivider.style.display = 'block';
+            }
+        }
+
         function handlePopupSubmit(event) {
             event.preventDefault();
             const nameInput = document.getElementById('pop-name');
@@ -484,6 +517,7 @@
             localStorage.setItem('user-info', JSON.stringify({ name, source }));
             localStorage.setItem('popup-dismissed-v3', 'true');
             
+            updateLoginHeaderState();
             closePopup();
             incrementVisitorCount();
 
@@ -570,6 +604,7 @@
 
             // Check if popup was already dismissed
             const popupDismissed = localStorage.getItem('popup-dismissed-v3');
+            updateLoginHeaderState();
             if (popupDismissed === 'true') {
                 closePopup();
                 fetchVisitorCount();

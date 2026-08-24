@@ -41,6 +41,7 @@
     <div class="container">
         <div class="hero">
             <img src="images/Logo.png" alt="Hero Image">
+            <canvas id="snake-canvas" width="450" height="120"></canvas>
         </div>
         <div class="text-area">
             <div class="lang-tr reveal">
@@ -182,18 +183,16 @@
                                     <div class="slides-container">
                                         <div class="slides-track project-slides-track">
                                             <div class="slide">
-                                                <div class="screenshot-placeholder">
-                                                    <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                                                    <span class="lang-tr">Proje 1 - Görsel 1</span>
-                                                    <span class="lang-en">Project 1 - Screenshot 1</span>
-                                                </div>
+                                                <img src="images/Ring-Pong/bg.png" alt="proje 1 - Görsel 1">
                                             </div>
                                             <div class="slide">
-                                                <div class="screenshot-placeholder">
-                                                    <svg viewBox="0 0 24 24" width="48" height="48" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                                                    <span class="lang-tr">Proje 1 - Görsel 2</span>
-                                                    <span class="lang-en">Project 1 - Screenshot 2</span>
-                                                </div>
+                                                <img src="images/Ring-Pong/KFndDs.png" alt="proje 1 - Görsel 2">
+                                            </div>
+                                            <div class="slide">
+                                                <img src="images/Ring-Pong/QYBR3U.png" alt="proje 1 - Görsel 3">
+                                            </div>
+                                            <div class="slide">
+                                                <img src="images/Ring-Pong/z63YUZ.png" alt="proje 1 - Görsel 4">
                                             </div>
                                         </div>
                                     </div>
@@ -217,7 +216,7 @@
                                     </p>
                                 </div>
                                 <div class="project-download-wrapper">
-                                    <a href="#" class="download-btn">
+                                    <a href="https://turx-interactive.itch.io/ring-pon" target="_blank" rel="noopener noreferrer" class="download-btn">
                                         <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M5 20h14v-2H5v2zm7-18L5.33 11h4V16h5.33v-5h4L12 2z"/></svg>
                                         <span class="lang-tr">Oyunu İndir (Demo)</span>
                                         <span class="lang-en">Download Game (Demo)</span>
@@ -432,7 +431,7 @@
 
         // Inner Image Slideshow Logic (Per Project)
         let innerSlideIndexes = [0, 0, 0];
-        const innerSlidesCounts = [2, 2, 2]; // 2 images per project
+        const innerSlidesCounts = [4, 2, 2]; // 4 images for Project 1, 2 for others
         let innerSlideInterval;
 
         function updateInnerSlider(projectIdx) {
@@ -440,8 +439,7 @@
             if (projectSlides.length > projectIdx) {
                 const track = projectSlides[projectIdx].querySelector('.project-slides-track');
                 if (track) {
-                    const totalInner = innerSlidesCounts[projectIdx];
-                    track.style.transform = `translateX(-${innerSlideIndexes[projectIdx] * (100 / totalInner)}%)`;
+                    track.style.transform = `translateX(-${innerSlideIndexes[projectIdx] * 100}%)`;
                 }
             }
         }
@@ -565,10 +563,142 @@
             closePopup();
         }
 
+        // Auto-playing retro Snake simulation under the logo
+        function initSnakeAnimation() {
+            const canvas = document.getElementById('snake-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            const cols = 30;
+            const rows = 8;
+            const cellSize = 15;
+            
+            let snake = [];
+            let direction = { x: 1, y: 0 };
+            let apple = { x: 0, y: 0 };
+            let gameInterval = null;
+
+            function resetGame() {
+                snake = [
+                    { x: 5, y: 3 },
+                    { x: 4, y: 3 },
+                    { x: 3, y: 3 }
+                ];
+                direction = { x: 1, y: 0 };
+                spawnApple();
+            }
+
+            function spawnApple() {
+                let attempts = 0;
+                while (attempts < 100) {
+                    const ax = Math.floor(Math.random() * cols);
+                    const ay = Math.floor(Math.random() * rows);
+                    const onSnake = snake.some(segment => segment.x === ax && segment.y === ay);
+                    if (!onSnake) {
+                        apple = { x: ax, y: ay };
+                        return;
+                    }
+                    attempts++;
+                }
+                apple = { x: cols - 5, y: Math.floor(rows / 2) };
+            }
+
+            function update() {
+                const head = snake[0];
+                const possibleMoves = [
+                    { x: 1, y: 0, dir: 'right' },
+                    { x: -1, y: 0, dir: 'left' },
+                    { x: 0, y: 1, dir: 'down' },
+                    { x: 0, y: -1, dir: 'up' }
+                ];
+
+                const validMoves = possibleMoves.filter(move => {
+                    const nx = head.x + move.x;
+                    const ny = head.y + move.y;
+                    if (nx < 0 || nx >= cols || ny < 0 || ny >= rows) return false;
+                    const collidesWithBody = snake.slice(1).some(segment => segment.x === nx && segment.y === ny);
+                    return !collidesWithBody;
+                });
+
+                if (validMoves.length === 0) {
+                    resetGame();
+                    return;
+                }
+
+                let bestMove = validMoves[0];
+                let minDistance = Infinity;
+
+                validMoves.forEach(move => {
+                    const nx = head.x + move.x;
+                    const ny = head.y + move.y;
+                    const dist = Math.abs(nx - apple.x) + Math.abs(ny - apple.y);
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        bestMove = move;
+                    }
+                });
+
+                direction = { x: bestMove.x, y: bestMove.y };
+
+                const newHead = { x: head.x + direction.x, y: head.y + direction.y };
+                snake.unshift(newHead);
+
+                if (newHead.x === apple.x && newHead.y === apple.y) {
+                    spawnApple();
+                } else {
+                    snake.pop();
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw grid dots (extremely subtle to give a digital feel)
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+                for (let c = 0; c < cols; c++) {
+                    for (let r = 0; r < rows; r++) {
+                        ctx.fillRect(c * cellSize + 6, r * cellSize + 6, 3, 3);
+                    }
+                }
+
+                // Draw Apple
+                ctx.fillStyle = '#ff3333';
+                ctx.shadowColor = '#ff3333';
+                ctx.shadowBlur = 6;
+                ctx.fillRect(apple.x * cellSize + 3, apple.y * cellSize + 3, cellSize - 6, cellSize - 6);
+                
+                ctx.shadowBlur = 0;
+
+                // Draw Snake
+                snake.forEach((segment, idx) => {
+                    ctx.fillStyle = idx === 0 ? '#ffffff' : 'rgba(255, 255, 255, 0.85)';
+                    ctx.fillRect(segment.x * cellSize + 2, segment.y * cellSize + 2, cellSize - 4, cellSize - 4);
+
+                    if (idx === 0) {
+                        ctx.fillStyle = '#000000';
+                        if (direction.x !== 0) {
+                            ctx.fillRect(segment.x * cellSize + (direction.x > 0 ? 10 : 3), segment.y * cellSize + 3, 2, 2);
+                            ctx.fillRect(segment.x * cellSize + (direction.x > 0 ? 10 : 3), segment.y * cellSize + 10, 2, 2);
+                        } else {
+                            ctx.fillRect(segment.x * cellSize + 3, segment.y * cellSize + (direction.y > 0 ? 10 : 3), 2, 2);
+                            ctx.fillRect(segment.x * cellSize + 10, segment.y * cellSize + (direction.y > 0 ? 10 : 3), 2, 2);
+                        }
+                    }
+                });
+            }
+
+            resetGame();
+            gameInterval = setInterval(() => {
+                update();
+                draw();
+            }, 160);
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const savedLang = localStorage.getItem('preferred-lang') || 'tr';
             switchLanguage(savedLang);
             startInnerSlidersAutoplay();
+            initSnakeAnimation();
 
             // Check if popup was already dismissed
             const popupDismissed = localStorage.getItem('popup-dismissed-v3');

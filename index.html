@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ad Soyad — Kişisel Bio</title>
+  <meta name="description" content="Kişisel bio sayfası, sosyal medya hesapları ve projelerim.">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Siyah Açılış Ekranı (Intro / Splash Screen) -->
+  <div id="introScreen" class="intro-screen">
+    <div class="intro-content">
+      <h1 class="intro-name">TURX INTERACTIVE</h1>
+      <div class="intro-line"></div>
+    </div>
+  </div>
+
+  <div class="layout-wrapper">
+    <!-- Üst / Hero & Bio Bölümü (Ortalanmış) -->
+    <header class="header-section">
+      <div class="header-content">
+        <div class="profile-header">
+          <h1 class="name">KÜRŞAT KONAŞOĞLU</h1>
+          <p class="role-badge">Yazılım Geliştirici &amp; Oyun Geliştiricisi</p>
+        </div>
+
+        <p class="bio-text">
+          Oyun ve yazılım dünyasında gelişmeyi amaçlayan bir programcı
+        </p>
+
+        <!-- Sosyal Medya Linkleri -->
+        <div class="socials-container">
+          <div class="social-links">
+            <a href="https://github.com/kkonasoglu" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+              <i class="fa-brands fa-github"></i>
+              <span>GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/k%C3%BCr%C5%9Fat-kona%C5%9Fo%C4%9Flu-79052538a/" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+              <i class="fa-brands fa-linkedin-in"></i>
+              <span>LinkedIn</span>
+            </a>
+            <a href="https://x.com/gravenanimus" target="_blank" rel="noopener noreferrer" class="social-link" title="X (Twitter)">
+              <i class="fa-brands fa-x-twitter"></i>
+              <span>X</span>
+            </a>
+            <a href="https://www.instagram.com/kkonasoglu/" target="_blank" rel="noopener noreferrer" class="social-link" title="Instagram">
+              <i class="fa-brands fa-instagram"></i>
+              <span>Instagram</span>
+            </a>
+            <a href="https://www.youtube.com/@kursatkonasoglu1611" target="_blank" rel="noopener noreferrer" class="social-link" title="YouTube">
+              <i class="fa-brands fa-youtube"></i>
+              <span>YouTube</span>
+            </a>
+            <a href="https://discord.gg/drv9D2ePGt" target="_blank" rel="noopener noreferrer" class="social-link" title="Discord">
+              <i class="fa-brands fa-discord"></i>
+              <span>Discord</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Projeler Bölümü (Başlık ve sayaç kaldırıldı, doğrudan kartlar akıyor) -->
+    <main class="projects-section">
+      <div class="projects-grid">
+        <!-- Proje Kartı 1 -->
+        <a href="https://github.com/kkonasoglu/Unity-Pin-Pong" target="_blank" rel="noopener noreferrer" class="project-card">
+          <div class="card-top">
+            <span class="category-tag">GAME</span>
+            <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+          </div>
+          <h3 class="card-title">Ring-Pong</h3>
+          <p class="card-desc">
+            Yaptığım ve bitirdiğim unity'i öğrenme amacıyla yaptığım oyun
+          </p>
+          <div class="card-tags">
+            <span class="tech-tag">UNITY</span>
+            <span class="tech-tag">C#</span>
+            <span class="tech-tag">ASEPRITE</span>
+          </div>
+        </a>
+
+        <!-- Proje Kartı 2 -->
+        <a href="https://github.com/kkonasoglu/Snake-Survival" target="_blank" rel="noopener noreferrer" class="project-card">
+          <div class="card-top">
+            <span class="category-tag">GAME</span>
+            <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+          </div>
+          <h3 class="card-title">BITE & BOOM</h3>
+          <p class="card-desc">
+            Yaptığım ve bitirdiğim unity'i öğrenme amacıyla yaptığım 2.oyun
+          </p>
+          <div class="card-tags">
+            <span class="tech-tag">UNITY</span>
+            <span class="tech-tag">C#</span>
+            <span class="tech-tag">ASEPRITE</span>
+          </div>
+        </a>
+
+        <!-- Proje Kartı 3 -->
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="project-card">
+          <div class="card-top">
+            <span class="category-tag">GAME</span>
+            <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+          </div>
+          <h3 class="card-title">PROJE 3 : NEW GAME</h3>
+          <p class="card-desc">
+            Temeller bittikten sonra başına geçtiğim uzun soluklu oyun projem
+          </p>
+          <div class="card-tags">
+            <span class="tech-tag">UNITY</span>
+            <span class="tech-tag">C#</span>
+            <span class="tech-tag">ASEPRITE</span>
+          </div>
+        </a>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>© <span id="currentYear"></span> Adınız Soyadınız</span>
+      <span class="footer-dot">•</span>
+      <span>Tüm hakları saklıdır.</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
